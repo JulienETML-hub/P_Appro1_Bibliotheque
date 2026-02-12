@@ -1,0 +1,32 @@
+services:
+  db:
+    image: mysql:8.0.30
+    container_name: db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_DATABASE: "NovelingDB"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "pwd"
+    ports:
+      - "6033:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./scripts:/docker-entrypoint-initdb.d
+
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: pma_container
+    restart: always
+    depends_on:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_USER: "user"
+      PMA_PASSWORD: "pwd"
+    ports:
+      - "8081:80"
+
+volumes:
+  dbdata:

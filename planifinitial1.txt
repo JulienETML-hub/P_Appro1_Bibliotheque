@@ -1,0 +1,23 @@
+Modélisation DB (1 script SQL)
+Récupération & ajout dans la db des données de test (1 script SQL ?, + autre chose si on veut plus de données peut-être ? à voir (ex. googlebook api))
+Définir architecture du code
+Se renseigner / (ré)apprendre les technos (ex. ExpressJS, VueJS, Google API, ETC.)
+Planification Initiale
+Mettre en place des tests
+Création charte graphique + Maquettes ?
+
+
+Fonctionnalités du site attendue :
+
+PARTIE UTILISATEUR
+Page d'accueil
+Catalogue de Livres
+Inscription
+Utilisateur authentifié
+Niveau de popularité des livres (voir cdc)
+
+PARTIE ADMINISTRATEUR
+Gestion des livres
+Gestion des utilisateurs
+Informations persistantes stocké dans une DB
+Site Responsive
