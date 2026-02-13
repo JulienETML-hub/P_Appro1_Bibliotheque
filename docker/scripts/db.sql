@@ -1,10 +1,9 @@
-CREATE DATABASE IF NOT EXISTS NovelingDB;
-USE NovelingDB;
 CREATE TABLE Book(
    idBook INT AUTO_INCREMENT,
    title VARCHAR(100),
    description VARCHAR(5000),
    addedOnDate DATE,
+   urlCover VARCHAR(2000),
    PRIMARY KEY(idBook)
 );
 
@@ -36,10 +35,6 @@ CREATE TABLE StatusBook(
    commentaireUtilisateur VARCHAR(5000),
    dateDebutEmprunt DATETIME,
    dateFinEmprunt DATETIME,
-
-   isActive BOOLEAN 
-    AS(dateFinEmprunt < NOW())
-    STORED,
    idUser INT NOT NULL,
    idBook INT NOT NULL,
    PRIMARY KEY(idStatusBook),

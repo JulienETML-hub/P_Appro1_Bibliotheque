@@ -24,7 +24,7 @@ export default class Book extends Model {
     },
     urlCover: {
       type: DataTypes.STRING(2000),
-      allowNull: false
+      allowNull: true
     }
   }, {
     sequelize,

@@ -6,8 +6,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: "root"
       MYSQL_DATABASE: "NovelingDB"
-      MYSQL_USER: "user"
-      MYSQL_PASSWORD: "pwd"
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
     ports:
       - "6033:3306"
     volumes:
@@ -23,8 +23,6 @@ services:
     environment:
       PMA_HOST: db
       PMA_PORT: 3306
-      PMA_USER: "user"
-      PMA_PASSWORD: "pwd"
     ports:
       - "8081:80"
 
