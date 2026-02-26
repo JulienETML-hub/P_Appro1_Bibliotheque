@@ -10,8 +10,8 @@ export default class Genre extends Model {
       allowNull: false,
       primaryKey: true
     },
-    description: {
-      type: DataTypes.STRING(5000),
+    name: {
+      type: DataTypes.STRING(100),
       allowNull: true
     }
   }, {

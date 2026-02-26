@@ -1,10 +1,33 @@
-<script setup>
-defineProps({
-  msg: {
-    type: String,
-    required: true,
-  },
-})
+<script>
+import axios from 'axios'
+export default {
+    components: {
+
+    },
+    data() {
+        return {
+
+        }
+
+    },
+    methods: {
+        async Connexion(event) {
+            event.preventDefault() // Empêche le formulaire de se soumettre normalement
+            try 
+            {
+                const response = await axios.post(`http://localhost:3000/api/users/login`, {
+                    email: this.email,
+                    password: this.password
+                })
+                console.log("response :", response)
+            } 
+            catch (error) 
+            {
+                console.error(error)
+            }
+        }
+    }
+}
 </script>
 
 <template>
@@ -29,7 +52,7 @@ defineProps({
             </label>
             <input
               id="email"
-              type="email"
+              type="email" v-model="email"
               placeholder="ex: nom@email.com"
               class="col-start-3 col-span-8 row-start-2 row-span-2 flex justify-center items-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
               required
@@ -45,7 +68,7 @@ defineProps({
               </a>
             <input
               id="password"
-              type="password"
+              type="password" v-model="password"
               placeholder="••••••••"
               class="col-start-3 col-span-8 row-start-2 row-start 2 row-span-2 rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
               required

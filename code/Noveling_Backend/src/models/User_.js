@@ -23,6 +23,10 @@ export default class User_ extends Model {
     isAdmin: {
       type: DataTypes.BOOLEAN,
       allowNull: true
+    },
+    password: {
+      type: DataTypes.STRING(5000),
+      allowNull: false
     }
   }, {
     sequelize,

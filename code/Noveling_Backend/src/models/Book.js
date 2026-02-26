@@ -11,7 +11,7 @@ export default class Book extends Model {
       primaryKey: true
     },
     title: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(1000),
       allowNull: true
     },
     description: {
