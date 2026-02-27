@@ -1,7 +1,6 @@
 import { models } from "../config/sequelize.js";
 import axios from "axios";
 import etre_ecrit from "../models/etre_ecrit.js";
-import { auth } from "../middlewares/auth.js";
 
 export async function getBooks(req, res) {
     const books = await models.Book.findAll(); 

@@ -1,38 +1,32 @@
-<script>
+<script setup>
 import axios from 'axios'
-export default {
-    components: {
+import {onMounted, ref} from 'vue';
+import { useBooksStore} from '@/stores/books.store.js';
+import { useUsersStore } from '@/stores/users.store';
+const usersStore = useUsersStore();
 
-    },
-    data() {
-        return {
 
-        }
+onMounted(() =>{
+});
 
-    },
-    methods: {
-        async Connexion(event) {
-            event.preventDefault() // Empêche le formulaire de se soumettre normalement
-            try 
-            {
-                const response = await axios.post(`http://localhost:3000/api/users/login`, {
-                    email: this.email,
-                    password: this.password
-                })
-                console.log("response :", response)
-            } 
-            catch (error) 
-            {
-                console.error(error)
-            }
-        }
-    }
+const email = ref("");
+const password = ref("");
+
+async function handleSubmit() {
+  try {
+    await usersStore.login(email.value, password.value);
+    console.log("Connecté, idUser =", usersStore.$state);
+    
+  } catch (e) {
+    console.log("Erreur login =", e,usersStore.error);
+  }
+  
 }
+
 </script>
 
 <template>
-
-  <body class="min-h-screen bg-slate-50 grid grid-cols-12 items-center grid-rows-1">
+  <div class="min-h-screen bg-slate-50 grid grid-cols-12 items-center grid-rows-1">
     <div class="col-start-2 col-span-5 flex items-center justify-end">
     <img src="../assets/hibou.png"  alt="Logo" class="size-45/100" />
     </div>
@@ -43,9 +37,8 @@ export default {
           Connecte-toi pour accéder à ton compte
         </p>
       </div>
-
       <div class="">
-        <form class="">
+        <form @submit.prevent="handleSubmit">
           <div class=" grid grid-cols-12 grid-rows-4 gap-3">
             <label class="col-start-3 col-span-3 row-span-1 flex text-sm font-medium text-slate-700" for="email">
               Email
@@ -93,7 +86,7 @@ export default {
         <a href="#" class="font-semibold text-green-600 hover:text-green-700">Créer un compte</a>
       </p>
     </div>
-  </body>
+  </div>
 </template>
 
 <style scoped>

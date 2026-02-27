@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { createBook, deleteBook, getBookById, getBooks } from "../controllers/books.controller.js";
-import { auth } from "../middlewares/auth.js";
+import auth from "../middlewares/auth.js";
 
 const router = Router();
 

@@ -1,13 +1,25 @@
 import express from "express";
 import cors from "cors";
-
+import "dotenv/config";
 import booksRoutes from "./routes/books.routes.js";
 import usersRoutes from "./routes/users.routes.js";
-import {auth} from "./middlewares/auth.js";
+import auth from "./middlewares/auth.js";
+import cookieParser from "cookie-parser";
+
 const app = express();
+const PORT = process.env.PORT || 3000;
+
 
 // Middlewares globaux
-app.use(cors());
+app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173", // PAS '*'
+    credentials: true,               // autorise cookies / credentials
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(express.json()); // pour lire le JSON du body
 
 // Routes
@@ -24,4 +36,7 @@ app.use((err, req, res, next) => {
   res.status(500).json({ error: "Internal server error" });
 });
 
+app.listen(PORT, () => {
+  console.log(`API running on http://localhost:${PORT}`);
+});
 export default app;

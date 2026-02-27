@@ -85,8 +85,9 @@ export async function loginUser(req, res) {
                 const passwordMatch = await bcrypt.compare(password, user.password);    
                 if (passwordMatch) {
                     const token = jwt.sign({ idUser: user.idUser, pseudo: user.pseudo }, process.env.JWT_SECRET, { expiresIn: '1h' });
-                    res.cookie('access_token', token, { httpOnly: true, secure: process.env.NODE_ENV === 'preproduction' });
-                    res.json({ message: "Connexion réussie", data: { idUser: user.idUser, pseudo: user.pseudo, token } });
+                    res.cookie('access_token', token, { httpOnly: false, secure: process.env.NODE_ENV === 'production' });
+                    res.json({ message: "Connexion réussie", data: { idUser : user.idUser, pseudo : user.pseudo, mail : user.mail, token : token } });
+                    console.log(user.pseudo);
                 } else {
                     res.status(401).json({ message: "Mot de passe incorrect" });
                 }
