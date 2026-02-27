@@ -6,7 +6,7 @@ export const useUsersStore = defineStore("users", {
     idUser: null,
     pseudo: null,
     email: null,
-    token: null,
+    //token: null,
     loading: false,
     error: "",
   }),
@@ -29,7 +29,7 @@ export const useUsersStore = defineStore("users", {
         this.idUser = response.data.data.idUser;
         this.pseudo = response.data.data.pseudo;
         this.email = response.data.data.mail;
-        this.token = response.data.data.token
+        //this.token = response.data.data.token
         return response.data;
       } catch (e) {
         this.error = e.response.message || e.message;
