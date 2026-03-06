@@ -4,7 +4,6 @@ import axios from 'axios'
 import { onMounted, ref } from 'vue';
 import { useBooksStore } from '@/stores/books.store.js';
 import Header from './partial/Header.vue';
-import searchBar from './partial/searchBar.vue';
 import { useRoute } from 'vue-router';
 
 const booksStore = useBooksStore();

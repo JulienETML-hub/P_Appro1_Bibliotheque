@@ -12,6 +12,7 @@ export const useBooksStore = defineStore("books", {
     selectedGenres:[],
     authors : [],
     selectedAuthors:[],
+    selectedStatus:[],
     loading: false,
     error: "",
   }),

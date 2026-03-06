@@ -11,6 +11,7 @@ import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import { computed } from 'vue';
 import FilterByGenres from './partial/FilterByGenres.vue';
 import FilterByAuthors from './partial/FilterByAuthors.vue';
+import isBookAvailable from './partial/isBookAvailable.vue';
 const router = useRouter();
 
 const booksStore = useBooksStore();
@@ -54,6 +55,7 @@ onMounted(() => {
     <h1 class="mb-4 text-2xl font-semibold text-slate-900">Nos livres</h1>
   <FilterByGenres></FilterByGenres>
   <FilterByAuthors></FilterByAuthors>
+  <isBookAvailable></isBookAvailable>
     <!--TailWind Element  
     <Menu as="div" class="relative inline-block text-left">
       <MenuButton
