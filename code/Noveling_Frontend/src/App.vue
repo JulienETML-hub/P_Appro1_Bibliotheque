@@ -2,7 +2,7 @@
 
 import Homepage from './components/Homepage.vue';
 import Login from './components/Login.vue'
-import Header from './components/Header.vue'
+import Header from './components/partial/Header.vue'
 import { useUsersStore } from '@/stores/users.store';
 import { RouterView, RouterLink } from 'vue-router'
 import { onMounted } from 'vue';

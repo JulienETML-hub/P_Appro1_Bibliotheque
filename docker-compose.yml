@@ -1,0 +1,38 @@
+# 
+# Composition docker pour MySQL et PHPMyAdmin
+ 
+services:
+ 
+  db:
+  # Import de l'image mysql
+    image: mysql:8.0.30
+    # Définis les informations nécessaires
+    container_name: db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    ports:
+      - "6033:3306"
+    volumes:
+    # Lien entre la virtualisation de docker et la machine physique
+      - dbdata:/var/lib/mysql
+      - ./scripts:/scripts
+      # Execute un script sql afin de créer la base de données requise pour le jeu
+    command: --init-file /scripts/db_mysql.sql
+  phpmyadmin:
+    image: phpmyadmin:5.2.0
+    container_name: pma_container
+    links:
+      - db
+    environment:
+      PMA_HOST: db
+      PMA_PORT: 3306
+      PMA_ARBITRARY: 1
+    restart: always
+    ports:
+      - "8081:80"
+      
+# The database will be persistent among containers restarts.
+volumes:
+  dbdata:
+ 

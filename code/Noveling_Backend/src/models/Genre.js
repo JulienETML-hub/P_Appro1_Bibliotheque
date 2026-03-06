@@ -11,7 +11,7 @@ export default class Genre extends Model {
       primaryKey: true
     },
     name: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(50),
       allowNull: true
     }
   }, {

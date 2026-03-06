@@ -1,10 +1,11 @@
 <script setup>
 import axios from 'axios'
 import {onMounted, ref} from 'vue';
+import { useRouter } from 'vue-router'
 import { useBooksStore} from '@/stores/books.store.js';
 import { useUsersStore } from '@/stores/users.store';
+const router = useRouter()
 const usersStore = useUsersStore();
-
 
 onMounted(() =>{
 });
@@ -16,7 +17,7 @@ async function handleSubmit() {
   try {
     await usersStore.login(email.value, password.value);
     console.log("Connecté, idUser =", usersStore.$state);
-    
+    await router.push("/")
   } catch (e) {
     console.log("Erreur login =", e,usersStore.error);
   }

@@ -19,7 +19,7 @@ export async function getBookById(req, res) {
 export async function createBook(req, res) {
   try {
     const today = new Date().toISOString().slice(0, 10); // "YYYY-MM-DD"
-    const title = req.query.title;
+    const title = req.body.title;
     if (!title) {
       return res.status(400).json({ message: "Le titre est requis" });
     }
@@ -45,18 +45,18 @@ export async function createBook(req, res) {
 
     const bookId = newBook.idBook;
 
-    const authors = Array.isArray(bookData.authors) ? bookData.authors : [];
-    const createdAuthors = [];
+    const books = Array.isArray(bookData.books) ? bookData.books : [];
+    const createdbooks = [];
 
-    for (const authorName of authors) {
-      const [author] = await models.Author.findOrCreate({
-        where: { name: authorName },
-        defaults: { name: authorName }
+    for (const bookName of books) {
+      const [book] = await models.book.findOrCreate({
+        where: { name: bookName },
+        defaults: { name: bookName }
       });
-      createdAuthors.push(author);
+      createdbooks.push(book);
 
-      const authorId = author.idAuthor;
-      await etre_ecrit.create({ idBook: bookId, idAuthor: authorId });
+      const bookId = book.idbook;
+      await etre_ecrit.create({ idBook: bookId, idbook: bookId });
     }
     const genres = Array.isArray(bookData.categories) ? bookData.categories : [];
     for (const genreName of genres) {
@@ -67,7 +67,7 @@ export async function createBook(req, res) {
       const genreId = genre.idGenre;
       await models.contenir.create({ idBook: bookId, idGenre: genreId });
     }
-    res.status(201).json({ message: "Livre créé", data: newBook, authors: createdAuthors });
+    res.status(201).json({ message: "Livre créé", data: newBook, books: createdbooks });
   } catch (error) {
     console.error("Erreur lors de la création du livre :", error);
     res.status(500).json({ message: "Erreur lors de la création du livre" });
@@ -84,3 +84,19 @@ export async function deleteBook(req, res) {
         res.status(404).json({ message: "Livre non trouvé" });
     }
   }
+
+export async function getBooksByAuthorId(req, res) {
+
+    const { id } = req.params;
+    const book = [];
+    const booksid = await models.etre_ecrit.findAll({
+        where: { idAuthor: id }
+    }); 
+    //res.json({ message: "Liste des auteurs du livre", data: booksid[0].idbook })
+    
+    for( let i = 0; i < booksid.length; i++)
+        {
+           book[i]  = await models.Book.findByPk(booksid[i].idBook);
+        };
+    res.json({ message: "Liste des livres de l'auteur", data: book });
+}
