@@ -87,7 +87,7 @@ export const useStatusBookStore = defineStore('statusBook', {
         })
 
         // Mettre à jour le commentaire dans le store
-        const book = this.statusBooks.find(sb => sb.idBook === idBook)
+        const book = this.statusBooks.find(sb => sb.idStatusBook === id)
         if (book) {
           book.commentaireUtilisateur = commentaire
         }
