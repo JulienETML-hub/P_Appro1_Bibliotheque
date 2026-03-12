@@ -22,7 +22,7 @@ function handleKey(event) {
 }
 
 watchEffect(() => {
-    console.log(isFocused +"+"+ search.value)
+
     if(!isFocused.value){
     search.value = "";
 

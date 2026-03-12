@@ -5,8 +5,10 @@ import { onMounted, ref } from 'vue';
 import { useBooksStore } from '@/stores/books.store.js';
 import Header from './partial/Header.vue';
 import { useRoute } from 'vue-router';
-
+import BorrowABook from './partial/BorrowABook.vue';
+import { useUsersStore } from '@/stores/users.store.js';
 const booksStore = useBooksStore();
+const usersStore = useUsersStore();
 const route = useRoute();
 onMounted(() => {
   const bookId = route.params.id
@@ -20,7 +22,7 @@ onMounted(() => {
 <template>
   <!-- HTML CSS DE CETTE PAGE FAIS PAR CHATGPT -->
 
-  <Header />
+
 
   <!-- Loading -->
   <div v-if="booksStore.loading" class="mx-auto mt-6 max-w-5xl px-4">
@@ -96,7 +98,7 @@ onMounted(() => {
         </p>
 
         <button v-if="booksStore.selectedBook.isAvailable2" class="mt-5 rounded-lg bg-green-600 px-4 py-2 text-sm font-medium text-white hover:bg-green-500">
-          Emprunter
+          <BorrowABook></BorrowABook>
         </button>
         <button v-else="" class="mt-5 rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white hover:bg-red-600">
           Indisponible

@@ -23,15 +23,10 @@ if(usersStore.isLoggedIn){
 </script>
 
 <template>
-  <header>
 
-  </header>
-  <nav class="flex gap-4 p-4">
-    <RouterLink to="/">Accueil</RouterLink>
-    <RouterLink to="/login">Login</RouterLink>
-  </nav>
+
   <main>
-    
+    <Header class="mt-2" />
     <RouterView />
   </main>
 </template>

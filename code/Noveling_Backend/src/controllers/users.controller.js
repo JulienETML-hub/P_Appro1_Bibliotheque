@@ -9,6 +9,16 @@ export async function getUsers(req, res) {
   res.json({ message: "Liste des utilisateurs", data: users });
 }   
 
+export async function logout(req, res ) {
+    res.clearCookie("access_token", {
+    httpOnly: true,
+    sameSite: "lax",
+  });
+
+  return res.json({
+    message: "Déconnexion réussie"
+  });
+}
 export async function getUserById(req, res) {
     const { id } = req.params;
     const user = await models.User_.findByPk(id);   
@@ -18,7 +28,16 @@ export async function getUserById(req, res) {
         res.status(404).json({ message: "Utilisateur non trouvé"});
     }       
 }   
-
+export async function getMe(req, res) {
+    
+  const userId = req.user.idUser;
+  const user = await models.User_.findByPk(userId);
+  if (user) {
+      res.json({ message: "Utilisateur trouvé", data: user });
+  } else {
+      res.status(404).json({ message: "Utilisateur non trouvé"});
+  }
+}
 
 export async function deleteUser(req, res) {
     try {
@@ -84,9 +103,9 @@ export async function loginUser(req, res) {
             if (user) {
                 const passwordMatch = await bcrypt.compare(password, user.password);    
                 if (passwordMatch) {
-                    const token = jwt.sign({ idUser: user.idUser, pseudo: user.pseudo }, process.env.JWT_SECRET, { expiresIn: '1h' });
+                    const token = jwt.sign({ idUser: user.idUser, isAdmin: user.isAdmin }, process.env.JWT_SECRET, { expiresIn: '1h' });
                     res.cookie('access_token', token, { httpOnly: false, secure: process.env.NODE_ENV === 'production' });
-                    res.json({ message: "Connexion réussie", data: { idUser : user.idUser, pseudo : user.pseudo, mail : user.mail, token : token } });
+                    res.json({ message: "Connexion réussie", data: { idUser : user.idUser, pseudo : user.pseudo, mail : user.mail, isAdmin : user.isAdmin ,token : token } });
                     console.log(user.pseudo);
                 } else {
                     res.status(401).json({ message: "Mot de passe incorrect" });

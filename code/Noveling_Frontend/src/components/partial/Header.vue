@@ -22,10 +22,13 @@ async function redirectCatalogue() {
   <a v-on:click="redirectHome()" class="justify-start">
   <img class="size-20 " src="../../assets/maison.png" alt="Icône de maison" >  
   </a>
-  <a v-on:click="redirectCatalogue"><h1 class="flex items-center text-4xl ">Noveling</h1></a>
+  <a v-on:click="redirectCatalogue" class="flex items-center gap-2">
+    <img class="size-20 " src="../../assets/catalogue.png" alt="Icône de maison" >
+    <h1 class="flex items-center text-4xl">Catalogue</h1>
+  </a>
+
   <a v-on:click="redirectProfile()" class="justify-end">
   <img class="size-20 " src="../../assets/profile.png" alt="Icône de maison" >  
   </a>
   </header>
-  <!-- <button v-on:click="usersStore.logoutLocal()" class="bg-red-500">Se déconnecter</button> -->
 </template>

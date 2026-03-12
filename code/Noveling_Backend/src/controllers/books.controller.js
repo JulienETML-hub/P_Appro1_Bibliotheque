@@ -73,7 +73,16 @@ export async function createBook(req, res) {
     res.status(500).json({ message: "Erreur lors de la création du livre" });
   }
 }
-
+// Récupérer les livres empruntés par un utilisateur
+export async function getBooksByUserId(req, res) {
+    const { id } = req.params;
+    const books = await models.StatusBook.findAll({
+        where: { idUser: id },
+        include: [{ model: models.Book, as: 'idBook_Book' }]
+    });
+    res.json({ message: "Liste des livres empruntés par l'utilisateur", data: books });
+}
+  
 export async function deleteBook(req, res) {
     const { id } = req.params;
     await models.etre_ecrit.destroy({ where: { idBook: id } });

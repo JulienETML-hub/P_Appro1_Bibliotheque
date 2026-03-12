@@ -36,7 +36,7 @@ app.use((req, res) => {
 });
 
 // Handler d'erreurs (si tu fais next(err))
-app.use((err, req, res, next) => {
+app.use((err, req) => {
   console.error(err);
   res.status(500).json({ error: "Internal server error" });
 });

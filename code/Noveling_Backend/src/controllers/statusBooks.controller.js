@@ -9,8 +9,10 @@ import Book from "../models/Book.js";
 export async function createStatusBook(req, res) {
     try {
         const { idUser, idBook, dateDebutEmprunt, dateFinEmprunt } = req.body;
-        StatusBook = await models.StatusBook.create({ idUser, idBook, dateDebutEmprunt, dateFinEmprunt });
+        const StatusBook = await models.StatusBook.create({ idUser, idBook, dateDebutEmprunt, dateFinEmprunt });
+        console.log("StatusBook créé :", StatusBook.toJSON());
         res.json({ message: "StatusBook créé", data: StatusBook });
+
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Erreur lors de la création du StatusBook" });
@@ -98,6 +100,15 @@ export async function getStatusBookByBookId(req, res) {
     catch {
         res.json({ message: "Erreur s'est produite" });
     }
-
-
 }
+export async function getStatusBookByUserId(req, res) {
+    const { id } = req.params;
+    try {   
+        const statusBook = await models.StatusBook.findAll({where: { idUser: id }});
+        res.json({ message: "Status du livre", data: statusBook });
+    }
+    catch {
+        res.json({ message: "Erreur s'est produite" });
+    }       
+}
+

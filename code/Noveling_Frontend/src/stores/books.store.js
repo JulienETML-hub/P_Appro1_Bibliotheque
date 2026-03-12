@@ -6,13 +6,16 @@ import { api } from "@/api/client"; // axios.create({ baseURL, withCredentials:t
 export const useBooksStore = defineStore("books", {
   state: () => ({
     books: [],
+    BooksBorrowed: [],
     selectedBook: null,
     MostPopularBooks: [],
     genres: [],
-    selectedGenres:[],
-    authors : [],
-    selectedAuthors:[],
-    selectedStatus:[],
+    selectedGenres: [],
+    authors: [],
+    selectedAuthors: [],
+    selectedStatus: [],
+    isAvailable3: null,
+    selectedPopularity: null,
     loading: false,
     error: "",
   }),
@@ -43,7 +46,7 @@ export const useBooksStore = defineStore("books", {
       }
       return true;
     }
-  },
+  }, 
 
 
   actions: {
@@ -54,12 +57,12 @@ export const useBooksStore = defineStore("books", {
         const res = await api.get("/api/books");
         this.books = res.data.data ?? res.data;
         if (syncAll == true) {
-        await this.syncPopularity();
-        await this.syncStatus();
-        await this.calcAvailability();
-        await this.syncGenres();
-        await this.syncAuthors();
-      }
+          await this.syncPopularity();
+          await this.syncStatus();
+          await this.calcAvailability();
+          await this.syncGenres();
+          await this.syncAuthors();
+        }
       } catch (e) {
         this.error = e.response?.data?.message || e.message;
       } finally {
@@ -74,18 +77,28 @@ export const useBooksStore = defineStore("books", {
         await this.syncAuthors();
       }
     },
-
+    async fetchMyBooksBorrowed(id) {
+      this.loading = true;
+      this.error = "";
+      try {
+        this.BooksBorrowed = (await api.get(`/api/books/byUser/${id}`)).data.data ?? [];
+      } catch (e) {
+        this.error = e.response?.data?.message || e.message;
+      } finally {
+        this.loading = false;
+      }
+    },
     async fetchBookById(id) {
       this.loading = true;
       this.error = "";
       try {
         const res = await api.get(`/api/books/${id}`);
         this.selectedBook = res.data.data ?? res.data;
-      await this.syncSelectedAuthors();
-      await this.syncSelectedGenres();
-      await this.syncSelectedPopularity();
-      await this.syncSelectedStatus();
-      await this.calcSelectedAvailability();
+        await this.syncSelectedAuthors();
+        await this.syncSelectedGenres();
+        await this.syncSelectedPopularity();
+        await this.syncSelectedStatus();
+        await this.calcSelectedAvailability();
       } catch (e) {
         this.error = e.response?.data?.message || e.message;
       } finally {
@@ -93,7 +106,8 @@ export const useBooksStore = defineStore("books", {
       }
 
     },
-    async fetchGenres(){
+
+    async fetchGenres() {
       this.loading = true;
       this.error = "";
       try {
@@ -106,7 +120,7 @@ export const useBooksStore = defineStore("books", {
         this.loading = false;
       }
     },
-        async fetchAuthors(){
+    async fetchAuthors() {
       this.loading = true;
       this.error = "";
       try {
@@ -139,7 +153,7 @@ export const useBooksStore = defineStore("books", {
     },
     async syncStatus() {
       for (const book of this.books) {
-        const res = await api.get(`api/statusBooks/statusBookByBookId/${book.idBook}`);
+        const res = await api.get(`api/statusBooks/ByBookId/${book.idBook}`);
         book.status = res.data.data;
       }
     },
@@ -171,7 +185,7 @@ export const useBooksStore = defineStore("books", {
     async syncSelectedStatus() {
       if (!this.selectedBook?.idBook) return;
 
-      const res = await api.get(`/api/statusBooks/statusBookByBookId/${this.selectedBook.idBook}`);
+      const res = await api.get(`/api/statusBooks/ByBookId/${this.selectedBook.idBook}`);
       this.selectedBook.status = res.data.data ?? res.data;
     },
 
@@ -197,6 +211,7 @@ export const useBooksStore = defineStore("books", {
   clearSelectedBook() {
     this.selectedBook = null;
   },
+
 },
 
 

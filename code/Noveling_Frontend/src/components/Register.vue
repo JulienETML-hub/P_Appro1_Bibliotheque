@@ -6,26 +6,24 @@ import { useBooksStore} from '@/stores/books.store.js';
 import { useUsersStore } from '@/stores/users.store';
 const router = useRouter()
 const usersStore = useUsersStore();
-
-
-
-
-async function redirectRegister() {
-  await router.push("/register")
+async function redirectLogin() {
+  await router.push("/login")
 }
 onMounted(() =>{
 });
 
+const pseudo = ref("");
 const email = ref("");
 const password = ref("");
 
 async function handleSubmit() {
   try {
-    await usersStore.login(email.value, password.value);
-    console.log("Connecté, idUser =", usersStore.$state);
+    await usersStore.register(pseudo.value,email.value, password.value);
+    console.log("Inscription réussie, idUser =", usersStore.$state);
+    await usersStore.login(usersStore.email, usersStore.password);
     await router.push("/")
   } catch (e) {
-    console.log("Erreur login =", e,usersStore.error);
+    console.log("Erreur inscription =", e, usersStore.data.error);
   }
   
 }
@@ -46,20 +44,32 @@ async function handleSubmit() {
       </div>
       <div class="">
         <form @submit.prevent="handleSubmit">
-          <div class=" grid grid-cols-12 grid-rows-4 gap-3">
-            <label class="col-start-3 col-span-3 row-span-1 flex text-sm font-medium text-slate-700" for="email">
+          <div class=" grid grid-cols-12 grid-rows-1">
+            <label class="col-start-3 col-span-3 row-span-1 flex justify-start items-center text-sm font-medium text-slate-700" for="pseudo">
+              Pseudo
+            </label>
+            <input
+              id="pseudo"
+              type="text" v-model="pseudo"
+              placeholder="ex: MonPseudo"
+              class="col-start-3 col-span-8 row-start-2 row-span-2 flex justify-center items-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
+              required
+            />
+          </div>
+          <div class="grid grid-cols-12 grid-rows-1">
+            <label class="col-start-3 col-span-3 row-span-1 flex justify-start items-center text-sm font-medium text-slate-700" for="email">
               Email
             </label>
             <input
               id="email"
               type="email" v-model="email"
               placeholder="ex: nom@email.com"
-              class="col-start-3 col-span-8 row-start-2 row-span-2 flex justify-center items-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
+              class="col-start-3 col-span-8 row-start-2 row-span-1 flex justify-center items-center rounded-xl border border-slate-300 bg-white px-4 py-2.5 text-slate-900 placeholder:text-slate-400 focus:border-green-500 focus:outline-none focus:ring-2 focus:ring-green-200"
               required
             />
           </div>
 
-          <div class="grid grid-cols-12 grid-rows-4 gap-3">
+          <div class="grid grid-cols-12 grid-rows-1">
               <label class="col-start-3 col-span-6 row-span-1 flex justify-start items-end text-sm font-medium text-slate-700" for="password">
                 Mot de passe
               </label>
@@ -79,19 +89,19 @@ async function handleSubmit() {
             type="submit"
             class="rounded-xl bg-green-600 px-4 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-green-800 focus:outline-none focus:ring-2 focus:ring-green-200"
           >
-            Se connecter
+            S'inscrire
           </button>
           </div>
           <div class="relative p-5">
-                  <p class="mt-auto text-center text-sm text-slate-600">
-        Pas de compte ?
-        <a @click="redirectRegister()" class="font-semibold text-green-600 hover:text-green-700">Créer un compte</a>
-      </p>
+            <div class="h-px w-full bg-slate-200"></div>
           </div>
         </form>
       </div>
 
-
+      <p class="mt-auto text-center text-sm text-slate-600">
+        Déjà un compte ?
+        <a @click="redirectLogin()" class="font-semibold text-green-600 hover:text-green-700">Se connecter</a>
+      </p>
     </div>
   </div>
 </template>
