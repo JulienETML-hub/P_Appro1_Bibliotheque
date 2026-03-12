@@ -1,10 +1,7 @@
 <script setup>
 
-import axios from 'axios'
 import { onMounted, ref } from 'vue';
 import { useBooksStore } from '@/stores/books.store.js';
-import Header from './partial/Header.vue';
-import searchBar from './partial/searchBar.vue';
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -24,7 +21,6 @@ onMounted(() => {
 
 <template>
 
-  <!--<searchBar />-->
 
   <div class="max-w-7xl mx-auto px-6 py-8 space-y-12">
 

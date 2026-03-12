@@ -4,7 +4,7 @@ import auth from "../middlewares/auth.js";
 import authorize from "../middlewares/authorize.js";
 const router = Router();
 
-router.get("/",getBooks);
+router.get("/", getBooks);
 router.get("/create",authorize(true), createBook);
 router.get("/delete/:id",authorize(true), deleteBook);
 router.get("/byAuthor/:id", getBooksByAuthorId)
