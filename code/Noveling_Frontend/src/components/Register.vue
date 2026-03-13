@@ -19,11 +19,11 @@ const password = ref("");
 async function handleSubmit() {
   try {
     await usersStore.register(pseudo.value,email.value, password.value);
-    console.log("Inscription réussie, idUser =", usersStore.$state);
-    await usersStore.login(usersStore.email, usersStore.password);
+    console.log("Inscription réussie=",  usersStore.email  + usersStore.password + email);
+    await usersStore.login(usersStore.email, password.value);
     await router.push("/")
   } catch (e) {
-    console.log("Erreur inscription =", e, usersStore.data.error);
+    console.log(e)
   }
   
 }
@@ -37,9 +37,9 @@ async function handleSubmit() {
     </div>
     <div class="rounded-lg bg-green-50 p-6 outline -outline-1 outline-green-0 dark:bg-green-800 col-span-5 size-50/100">
       <div class="mb-8 text-center">
-        <h1 class="text-2xl font-bold text-slate-900">Connexion</h1>
+        <h1 class="text-2xl font-bold text-slate-900">Inscription</h1>
         <p class="mt-2 text-sm text-slate-600">
-          Connecte-toi pour accéder à ton compte
+          Inscris-toi
         </p>
       </div>
       <div class="">

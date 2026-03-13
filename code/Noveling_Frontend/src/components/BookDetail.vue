@@ -22,8 +22,6 @@ onMounted(() => {
 <template>
   <!-- HTML CSS DE CETTE PAGE FAIS PAR CHATGPT -->
 
-
-
   <!-- Loading -->
   <div v-if="booksStore.loading" class="mx-auto mt-6 max-w-5xl px-4">
     <div class="rounded-xl border border-slate-200 bg-white p-4 text-slate-700 shadow-sm">

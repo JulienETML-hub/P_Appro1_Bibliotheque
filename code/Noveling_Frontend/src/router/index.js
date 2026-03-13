@@ -21,13 +21,10 @@ const router = createRouter({
 
 router.beforeEach(async (to, from, next) => {
   const userStore = useUsersStore();
-
-  // Si la route nécessite une auth
   if (to.meta.requiresAuth) {
     try {
-      // Vérifie si on est connecté
       if (!userStore.idUser) {
-        await userStore.FetchMe(); // appelle ton API /me
+        await userStore.FetchMe(); 
       }
       next();
     } catch (error) {

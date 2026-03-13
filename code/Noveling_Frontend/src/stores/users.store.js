@@ -35,6 +35,7 @@ export const useUsersStore = defineStore("users", {
         return response.data;
       } catch (e) {
         this.error = e.response.message || e.message;
+        throw this.error
       } finally {
         this.loading = false;
       }

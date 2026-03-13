@@ -56,6 +56,9 @@ onMounted(async () => {
       <h3 class="text-lg font-semibold mb-4">Mes emprunts</h3>
 
       <ul class="space-y-4">
+        <li v-if="!booksStore.BooksBorrowed.length">
+          Aucun emprunt 
+        </li>
         <li v-for="book in booksStore.BooksBorrowed" :key="book.idBook"
           class="border rounded-lg p-4 bg-gray-50 space-y-2">
           <div class="text-sm">

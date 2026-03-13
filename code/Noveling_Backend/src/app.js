@@ -23,7 +23,7 @@ app.use(
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
-app.use(express.json()); // pour lire le JSON du body
+app.use(express.json());
 
 // Routes
 app.use("/api/books",auth, booksRoutes);

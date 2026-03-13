@@ -112,7 +112,7 @@ export const useBooksStore = defineStore("books", {
       this.error = "";
       try {
         const res = await api.get(`/api/genres`);
-        this.genres = res.data.data ?? res.data;
+        this.genres = res.data.data;
 
       } catch (e) {
         this.error = e.response?.data?.message || e.message;
@@ -125,7 +125,7 @@ export const useBooksStore = defineStore("books", {
       this.error = "";
       try {
         const res = await api.get(`/api/authors`);
-        this.authors = res.data.data ?? res.data;
+        this.authors = res.data.data;
 
       } catch (e) {
         this.error = e.response?.data?.message || e.message;
@@ -138,7 +138,7 @@ export const useBooksStore = defineStore("books", {
       this.error = "";
       try {
         const res = await api.get(`/api/statusBooks/MostPopular`);
-        this.MostPopularBooks = res.data.data ?? res.data;
+        this.MostPopularBooks = res.data.data ;
       } catch (e) {
         this.error = e.response?.data?.message || e.message;
       } finally {
